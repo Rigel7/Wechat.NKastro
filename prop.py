@@ -13,7 +13,7 @@ def apod(fromu,tou):
     perurl = r'http://www.phys.ncku.edu.tw/~astrolab/mirrors/apod/ap' + today + '.html'
     desstart = netpage.find(u'說明:')
     desend = netpage[desstart:].find('<p> <center>') + desstart
-    description = re.sub(r'<.*?>','',re.sub(r'\r\n*','',netpage[desstart:desend]))
+    description = re.sub(r'<.*?>','',re.sub('[\r\n]*','',netpage[desstart:desend]))
     return '''<xml><ToUserName><![CDATA[%s]]></ToUserName><FromUserName><![CDATA[%s]]></FromUserName><CreateTime>%s</CreateTime><MsgType><![CDATA[news]]></MsgType><ArticleCount>1</ArticleCount><Articles><item><Title><![CDATA[%s]]></Title> <Description><![CDATA[%s]]></Description><PicUrl><![CDATA[%s]]></PicUrl><Url><![CDATA[%s]]></Url></item></Articles></xml>''' % (fromu,tou,str(int(time.time())),'APOD' + today + ':' + title,description,pic,perurl)
 def caiyun(fromu,tou):
     skycondes = {'CLEAR_DAY':u'晴','CLEAR_NIGHT':u'晴','PARTLY_CLOUDY_DAY':u'多云','PARTLY_CLOUDY_NIGHT':u'多云','CLOUDY':u'阴','RAIN':u'雨','SLEET':u'雨夹雪','SNOW':u'雪','WIND':u'大风','FOG':u'雾霾'}
